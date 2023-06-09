@@ -26,7 +26,7 @@
         </ul>
         </nav>
     </header>
-            <aside class="">
+            {# <aside class="">
                 <div class="">
                     <fieldset class="">
                         <legend>Public Rooms</legend>
@@ -44,7 +44,7 @@
                         </div>
                     </fieldset>
                 </div>
-            </aside>
+            </aside> #}
     <div class="container bg-img2">
         <h1>Flask Chat</h1>
         {% for message in messages %}
@@ -55,22 +55,22 @@
             <input type="submit" value="Send">
         </form>
     </div>
-                <aside class="">
-                    <div class="right">
-                        <fieldset class="joined fs" id="rooms_joined">
-                            <legend>Teams Joined</legend>
-                            {% for team in logged_user.teams %}
-                                <div class="joined_room" id="joined{{team.id}}" >
-                                    <p class="room_select" onclick="getHistory({{team.id}})"><span id="newFor{{team.id}}" class="unreads"></span> {{team.team_name}} </p>
-                                    <button onclick="leaveTeam({{team.id}})" class="btn">Leave</button>
-                                </div>
-                            {% endfor %}
-                        </fieldset>
-                        <fieldset class="invites fs">
-                            <legend>Team Invites</legend>
-                        </fieldset>
-                    </div>
-                </aside>
+        {# <aside class="">
+            <div class="right">
+                <fieldset class="joined fs" id="rooms_joined">
+                    <legend>Teams Joined</legend>
+                    {% for team in logged_user.teams %}
+                        <div class="joined_room" id="joined{{team.id}}" >
+                            <p class="room_select" onclick="getHistory({{team.id}})"><span id="newFor{{team.id}}" class="unreads"></span> {{team.team_name}} </p>
+                            <button onclick="leaveTeam({{team.id}})" class="btn">Leave</button>
+                        </div>
+                    {% endfor %}
+                </fieldset>
+                <fieldset class="invites fs">
+                    <legend>Team Invites</legend>
+                </fieldset>
+            </div>
+        </aside> #}
 
     <div class="user-dashboard-nav">
         <p class="">Logged in as: {{session['username']}}</p>
