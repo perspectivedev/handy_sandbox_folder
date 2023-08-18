@@ -4,17 +4,19 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-flask = "*"
+flask = "==2.1.1"
+flask-bcrypt = "*"
 flash = "*"
 pymysql = "*"
-flask-bcrypt = "*"
 flask-socketio = "*"
-eventlet = "*"
 greenlet = "*"
-six = "*"
 dnspython = "*"
+six = "*"
 gunicorn = "*"
+eventlet = "*"
 gevent = "*"
+flask-assets = "==2.0"
+pytailwindcss = "==0.1.4"
 
 [dev-packages]
 

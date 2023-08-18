@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" href="{{url_for('static', filename='images/favicon.ico')}}" type="image">
+    <link rel="stylesheet" href="{{url_for('static', filename='css/styles.css') }}" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js" integrity="sha512-q/dWJ3kcmjBLU4Qc47E4A9kTB4m3wuTY7vkFJDTZKjTs8jhyGQnaUrxa0Ytd0ssMZhbNua9hE+E7Qv1j+DyZwA==" crossorigin="anonymous" defer></script>
+    <title>Registration and Login</title>
+</head>
+<body class="bg-[url('../images/cah_item1.jpg')] bg-no-repeat bg-center object-cover text-white w-full">
+    <div class="flex flex-row items-center gap-4 mt-24 justify-center w-full">
+        <div class="container flex flex-col border bg-slate-700 w-3/12 p-4 rounded-lg">
+            <h1 class="text-center font-bold">Register</h1>
+            {% for message in get_flashed_messages(category_filter=['reg']) %}
+                <p class="text-red-500">{{message}}</p>
+            {% endfor %}
+            <form action="/users/registration" method="POST" class="">
+                <div class="flex flex-row gap-4 items-center justify-center m-4">
+                    <label for="first_name" class="text-right">First Name: </label>
+                    <input type="text" id="first_name" name="first_name" class="border border-slate-300 rounded-lg text-slate-600" />
+                </div>
+                <div class="flex flex-row gap-4 items-center justify-center m-4">
+                    <label for="last_name" class="text-right">Last Name: </label>
+                    <input type="text" id="last_name" name="last_name" class="border border-slate-300 rounded-lg text-slate-600" />
+                </div>
+                <div class="flex flex-row gap-4 items-center justify-center m-4">
+                    <label for="username" class="text-right">Username: </label>
+                    <input type="text" id="username" name="username" class="border border-slate-300 rounded-lg text-slate-600" />
+                </div>
+                <div class="flex flex-row gap-4 items-center justify-center m-4">
+                    <label for="email" class="text-right">Email: </label>
+                    <input type="text" id="email" name="email" class="border border-slate-300 rounded-lg text-slate-600" />
+                </div>
+                <div class="flex flex-row gap-4 items-center justify-center m-4">
+                    <label for="password" class="text-right">Password: </label>
+                    <input type="password" id="password" name="password" class="border border-slate-300 rounded-lg text-slate-600" />
+                </div>
+                <div class="flex flex-row gap-4 items-center justify-center m-4">
+                    <label for="confirm_pass" class="text-right">Confirm Password: </label>
+                    <input type="password" id="confirm_pass" name="confirm_pass" class="border border-slate-300 rounded-lg text-slate-600" />
+                </div>
+                <button type="submit" class="bg-blue-700 text-white flex flex-col justify-center rounded-lg p-2 text-center">Submit</button>
+            </form>
+        </div>
+        <div class="container flex flex-col items-center border rounded-lg bg-slate-700 w-3/12 p-4">
+            <h1 class="font-bold">Login</h1>
+            {% for message in get_flashed_messages(category_filter=['log']) %}
+                <p class="text-red-500">{{message}}</p>
+            {% endfor %}
+            <form action="/users/login" method="POST" class="">
+                <div class="flex flex-row gap-4 items-center justify-center m-4">
+                    <label for="username" class="text-right">Username: </label>
+                    <input type="text" name="username" class="border border-slate-300 rounded-lg text-slate-600" />
+                </div>
+                <div class="flex flex-row gap-4 items-center justify-center m-4">
+                    <label for="password" class="text-right">Password: </label>
+                    <input type="password" name="password" class="border border-slate-300 rounded-lg text-slate-600" />
+                </div>
+                <button type="submit" class="bg-blue-700 text-white flex flex-col justify-center rounded-lg p-2 text-center">Submit</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="{{url_for('static', filename='images/favicon.ico')}}" type="image">
+    <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/styles.css')}}">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js" integrity="sha512-q/dWJ3kcmjBLU4Qc47E4A9kTB4m3wuTY7vkFJDTZKjTs8jhyGQnaUrxa0Ytd0ssMZhbNua9hE+E7Qv1j+DyZwA==" crossorigin="anonymous" defer></script>
+    <script src="{{url_for ('static', filename='js/main.js')}}" defer></script>
+    <title>My Rooms</title>
+</head>
+<body>
+<div class="container flex flex-row w-full justify-between items-center p-4 m-4 gap-4">
+    <div class="container bg-slate-600 flex flex-col justify-center items-center">
+        <h2>Create Room</h2>
+        <form action="/rooms/create" method="POST">
+            <label for="name">Room Name</label>
+            <input type="text" name="name" id="name">
+            <input type="checkbox" name="private" id="private">
+            <label for="private">Private</label>
+            <button type="submit" class="bg-indigo-600 hover:bg-indigo-300 rounded-lg text-white p-2 text-center">Create</button>
+        </form>
+    </div>
+    <div class="container bg-slate-600 flex flex-col justify-center items-center w-full">
+        <h2>My Private Rooms</h2>
+        <!-- under construction -->
+        <div class="container bg-slate-600 flex flex-col justify-center w-full">
+            <form><button type="submit" class="bg-red-600 hover:bg-red-300 text-white p-2 rounded-lg">Delete</button></form>
+            <p>Room Name</p>
+            <p>1 joined</p>
+            <form>
+                <label for="invite_id">Invite:</label>
+                <select name="invite_id" id="invite_id">
+                    <option value="test">Test User</option>
+                </select>
+                <button type="submit" class="bg-indigo-600 hover:bg-indigo-300 rounded-lg text-white p-2 text-center">Invite</button>
+            </form>
+        </div>
+
+    </div>
+    <div class="container bg-slate-600 flex flex-col justify-center items-center">
+        <h2>My Public Rooms</h2>
+        {% for public_room in public %}
+        <div class="container bg-slate-600">
+            <form action="/rooms/{{public_room.id}}/delete" method="POST"><button type="submit" class="btn">Delete</button></form>
+            <p>{{public_room.name}}</p>
+            <p>{{public_room.joined}} joined</p>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+    <div class="nav">
+        <p>Logged in as: <span class="text-slate-600">{{logged_user.username}}</span></p>
+        <form action="/dashboard">
+            <button type="submit" class="bg-indigo-600 hover:bg-indigo-300 rounded-lg text-white p-2 text-center">Chat</button>
+        </form>
+        <form action="/users/logout">
+            <button type="submit" class="bg-red-600 hover:bg-red-300 text-white p-2 rounded-lg">Log Out</button>
+        </form>
+    </div>
+</body>
+</html>

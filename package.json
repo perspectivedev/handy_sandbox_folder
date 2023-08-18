@@ -1,0 +1,26 @@
+{
+  "name": "handy_sandbox_folder",
+  "version": "1.0.0",
+  "description": "You can see this project on my github account as well by clicking the following link: [github.com](https://github.com/perspectivedev/chat_app).",
+  "main": "index.js",
+  "type": "commonjs",
+  "scripts": {
+    "tw-build": "npx tailwind -i ./flask_app/static/src/input.css -o ./flask_app/static/css/styles.css --watch"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/perspectivedev/handy_sandbox_folder.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/perspectivedev/handy_sandbox_folder/issues"
+  },
+  "homepage": "https://github.com/perspectivedev/handy_sandbox_folder#readme",
+  "devDependencies": {
+    "autoprefixer": "^10.4.14",
+    "postcss": "^8.4.27",
+    "tailwindcss": "^3.3.3"
+  }
+}

@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="{{url_for('static', filename='images/favicon.ico')}}" type="image">
+    <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/styles.css')}}">
+    <title>Dashboard</title>
+</head>
+<body class="">
+        <header class="flex flex-row items-center justify-between  border divide-x-reverse-2 p-2 shadow-sm shadow-slate-700">
+            <div class="flex flex-row items-center w-3/12 gap-4">
+                <img src="{{url_for('static', filename='images/logo.png')}}" alt="logo image" class="logo h-[50px] w-[50px]"/>
+                <h1 class="font-bold">Chat App</h1>
+            </div>
+            <div class="flex flex-row gap-4 items-center justify-center">
+                <label class="">search:</label>
+                <input type="text" class="border border-slate-300 rounded-lg"/>
+            </div>
+            <nav class="flex flex-row items-center justify-between w-3/12">
+                <ul class="flex flex-row justify-between w-full">
+                    <li>item1</li>
+                    <li><span class="hover:text-indigo-900 text-indigo-600"><a href="/my_rooms">My Rooms</a></li>
+                    <li><span class="hover:text-slate-900 text-red-600"><a href="/users/logout">Logout</a></span></li>
+            </nav>
+        </header>
+        <main class="container my-4 mx-2 w-full bg-[url('../images/cah_item2.jpg')]">
+            <div class="flex flex-row items-center justify-center mt-4 w-full gap-4">
+                <p class="font-bold text-white mx-4">Logged in as:</p>
+                <span class="text-indigo-700 font-sm font-md"> {{logged_user.username}}</span>
+                    <div>
+                        <form action="/my_rooms">
+                            <button class="bg-indigo-600 p-2 rounded-lg hover:bg-indigo-300 text-white">My Rooms</button>
+                        </form>
+                    </div>
+                    <div>
+                        <form action="/users/logout">
+                            <button class="bg-red-600 hover:bg-red-300 text-white p-2 rounded-lg">Log Out</button>
+                        </form>
+                    </div>
+            </div>
+
+            <section class="flex flex-row justify-around m-4 p-4 gap-4">
+
+                    <div class="container border border-slate-100 rounded-lg flex flex-col justify-center bg-white">
+                        <h2 class="text-center">Rooms</h2>
+                            {% for room in public_rooms %}
+                                <div class="flex flex-col justify-center items-center text-slate-600">
+                                    <p class="text-slate-600">{{room.name}}</p>
+                                    <button type="button" onclick="joinNewRoom({{room.id}})" class="bg-indigo-600 hover:bg-indigo-300 text-white p-2 text-center">Join</button>
+                                </div>
+                            {% endfor %}
+                    </div>
+
+                <div class="container rounded-lg flex flex-col justify-center bg-transparent">
+
+                        <div class="container border border-slate-200 rounded-lg bg-slate-600 text-white">
+                            <h2 class="text-center mt-3.5">Chat Room: <span id="current_room"></span></h2>
+                            <div id="current_chat" class="flex flex-col justify-center p-8">
+                                <p class="border-b-2  border-slate-500 divide-x-reverse-2 mb-3.5 pb-4" id="current_message"><span class="text-gray-400">Join at least one room and then select it from the right</span></p>
+                            </div>
+                        </div>
+
+                        <div class="container border border-slate-200 rounded-lg flex flex-col justify-center bg-slate-600 mt-3.5">
+                            <form id="add_message" onsubmit="send(event)">
+                                    <div class="flex flex-row gap-4 items-center justify-center m-4">
+                                        <input type="text" id="message" name="message" class="border border-slate-300 rounded-lg">
+                                        <button type="submit" class="p-2 border rounded-lg bg-blue-700 hover:bg-blue-400 text-white">Send</button>
+                                    </div>
+                                </form>
+                        </div>
+
+                </div>
+
+                <div class="container border border-slate-100 rounded-lg flex flex-col justify-center bg-white"id="rooms_joined">
+                    <h2 class="text-center">Rooms Joined</h2>
+                    {% for room in logged_user.joined_rooms  %}
+                        <div class="flex flex-row justify-center gap-4 cursor-pointer" id="joined{{room.id}}">
+                            <p class="text-blue-900 underline underline-offset-1" onclick="getHistory({{room.id}})" > <span id="newFor{{room.id}}" class="text-red-600"></span> {{room.name}} </p>
+                            <button type="button" onclick="leaveRoom({{room.id}})" class="p-2 border rounded-lg bg-red-600 text-white hover:bg-red-400 hover:text-white">Leave</button>
+                        </div>
+                    {% endfor %}
+                </div>
+
+            </section>
+        </main>
+        <footer class=""></footer>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js" integrity="sha512-q/dWJ3kcmjBLU4Qc47E4A9kTB4m3wuTY7vkFJDTZKjTs8jhyGQnaUrxa0Ytd0ssMZhbNua9hE+E7Qv1j+DyZwA==" crossorigin="anonymous" defer></script>
+    <script src="{{url_for ('static', filename='js/main.js')}}" defer></script>
+</body>
+</html>

@@ -1,3 +1,97 @@
+# -------------------- Start File imports --------------------
+
+# -------------------- End File imports --------------------
+
+# -------------------- Start Regex variables --------------------
+
+# -------------------- End Regex variables --------------------
+
+# -------------------- Start of Class Declaration and Constructor init --------------------
+
+# -------------------- End of Class Declaration and Constructor init --------------------
+
+# -------------------- Start of  @classmethods --------------------
+
+# -------------------- End of  @classmethods --------------------
+
+# -------------------- Start of  @staticmethods --------------------
+
+# -------------------- End of  @staticmethods --------------------
+
+# -------------------- Start Controllers/Routes for models --------------------
+
+# -------------------- End Controllers/Routes for models --------------------
+
+<link rel="stylesheet" type="text/css" href="./static/css/style.css">
+<script src="./static/js/main.js" defer></script>
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FlaskChat</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/chat.css') }}">
+    
+</head>
+
+<body>
+    <h1>FlaskChat</h1>
+    <div class="chat_areas">
+            <h2>Public Rooms</h2>
+        <fieldset class="chat fs">
+            <legend>Current Room: <span id="current_room"></span></legend>
+            <div id="current_chat">
+                <p>Join at least one room and then select it from the right</p>
+            </div>
+        </fieldset>
+        <div class="right">
+            <fieldset class="joined fs" id="rooms_joined">
+                <legend>Rooms Joined</legend>
+                {% for room in logged_user.joined_rooms  %}
+                    <div class="joined_room" id="joined{{room.id}}">
+                        <p class="room_select" onclick="getHistory({{room.id}})"><span id="newFor{{room.id}}" class="unreads"></span> {{room.name}} </p>
+                        <button onclick="leaveRoom({{room.id}})" class="btn">Leave</button>
+                    </div>
+                {% endfor %}
+            </fieldset>
+            <fieldset class="invites fs">
+                <legend>Rooms Invites</legend>
+            </fieldset>
+        </div>
+    </div>
+    <form class="add_message" onsubmit="send(event)">
+        <input type="text" name="message" id="message" placeholder="message">
+        <button class="btn">Send</button>
+    </form>
+    <div class="nav">
+        <p>Logged in as: {{logged_user.username}}</p>
+        <form action="/my_rooms">
+            <button class="btn">My Rooms</button>
+        </form>
+        <form action="/users/logout">
+            <button class="btn">Log Out</button>
+        </form>
+    </div>
+    <script src="https://cdn.socket.io/3.1.3/socket.io.min.js" integrity="sha384-cPwlPLvBTa3sKAgddT6krw0cJat7egBga3DJepJyrLl4Q9/5WLra3rrnMcyTyOnh" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/chat.js') }}"></script>
+</body>
+
+</html>
+
+<------------------------------- section for create a room form ------------------------------------>
+ <div class="flex flex-col">
+                        <form action="/my_rooms">
+                            <div class="flex flex-row gap-4 items-center justify-center m-4 bg-white">
+                                <label for="create_room" class="text-right">Create A Room: </label>
+                                <input type="text" id="name" name="name" class="border border-slate-300 rounded-lg">
+                                <button type="submit" class="p-2 border rounded-lg bg-blue-700 hover:bg-blue-400 text-white">Submit</button>
+                            </div>
+                        </form>
+                    </div>
+<-------------------------------- close section for create a room form ----------------------------------->
 
 Building a Flask chat and video application with Socket.IO can be more complex than the previous example,
 as it involves real-time video streaming and handling WebRTC connections. However,
