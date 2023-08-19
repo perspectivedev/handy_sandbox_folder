@@ -18,7 +18,7 @@ function jsonFetch(request, callback, where=null) {
         .then(response=> {
             const contentType = response.headers.get("content-type");
             if (!contentType || !contentType.includes("application/json")) {
-                callback(null, new TypeError('Content-Type is non-json', contentType));
+                callback(null, new TypeError(`Content-Type is non-json: ${contentType}`));
             } else
                 callback(response.json(), null); //json, no err
         })
