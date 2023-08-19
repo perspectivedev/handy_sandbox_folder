@@ -113,8 +113,8 @@ function getHistory(room_id) {
             return
         }
         roomDisplay.innerHTML = data[0].name
-        console.log('history', data)
-        renderChat(data)
+        console.log('history', data);
+        renderChat(data);
     }, 'get history error');
 }
 
