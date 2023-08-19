@@ -50,6 +50,7 @@
                                     <button type="button" onclick="joinNewRoom({{room.id}})" class="bg-indigo-600 hover:bg-indigo-300 text-white p-2 text-center">Join</button>
                                 </div>
                             {% endfor %}
+                            {{public_rooms.name}}
                     </div>
 
                 <div class="container rounded-lg flex flex-col justify-center bg-transparent">
@@ -57,7 +58,7 @@
                         <div class="container border border-slate-200 rounded-lg bg-slate-600 text-white">
                             <h2 class="text-center mt-3.5">Chat Room: <span id="current_room"></span></h2>
                             <div id="current_chat" class="flex flex-col justify-center p-8">
-                                <p class="border-b-2  border-slate-500 divide-x-reverse-2 mb-3.5 pb-4" id="current_message"><span class="text-gray-400">Join at least one room and then select it from the right</span></p>
+                                <p class="border-b-2  border-slate-500 divide-x-reverse-2 mb-3.5 pb-4">Join at least one room and then select it from the right</p>
                             </div>
                         </div>
 

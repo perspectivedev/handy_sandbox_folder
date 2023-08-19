@@ -73,7 +73,7 @@ class Room:
                 room = cls(row)
                 room.joined = row['joined']
                 rooms.append(room)
-                print(rooms)
+        print(rooms)
         return rooms
     
     @classmethod
@@ -104,7 +104,7 @@ class Room:
     def get_history_by_id(cls,data):
         data = {
             **data,
-            'format': r"%m/%d/%Y, %r" 
+            "format": r"%m / %d / %Y, %r" 
         }
         query = """
             SELECT name, content, username, DATE_FORMAT(messages.created_at, %(format)s) as created_at FROM rooms 
@@ -115,8 +115,8 @@ class Room:
         results = connectToMySQL(DATABASE).query_db(query,data)
         print(results)
         if results[0]['content'] == None:
-            return [{'name':results[0]['name'],'content':'Start us off!','username':'nothing','created_at':'this time'}]
-        print(results)
+            print(r"****************************************", results[0])
+            return [{'name': results[0]['name'], 'content': 'Start us off!', 'username': 'nothing', 'created_at': 'this time'}]
         return results
     
 

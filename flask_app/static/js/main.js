@@ -13,7 +13,19 @@ const joinedRoomList = document.getElementById('rooms_joined');
 
 
 // function declarations
+async function fetchJSON(request, where=null) {
+    try {
 
+      const response = await fetch(request);
+      const contentType = response.headers.get("content-type");
+      if (!contentType || !contentType.includes("application/json")) {
+        throw new TypeError("Oops, we haven't got JSON!");
+      }
+      return await response.json();
+    } catch (error) {
+      console.error(`Json Error: ${where === null ? '' : where}`, error);
+    }
+  }
 
 
 //async function to retrieve the logged in user's info and join them to their list of joined rooms
@@ -29,6 +41,8 @@ async function getUser() {
             joinRoom(room_id)
         }
 }
+
+
 
 //function for joining a previously joined room (room in our room list)
 function joinRoom(room_id) {
@@ -50,7 +64,7 @@ function joinNewRoom(room_id) {
         .then(res => res.json())
         .then(data => {
             joinedRoomList.innerHTML += `
-            <div class=""flex flex-row justify-center gap-4 cursor-pointer" id="joined${room_id}" >
+            <div class="flex flex-row justify-center gap-4 cursor-pointer" id="joined${room_id}" >
                 <p class="text-blue-900 underline underline-offset-1" onclick="getHistory(${room_id})" ><span id="newFor${room_id}" class="text-red-600"></span> ${data.roomname} </p>
                 <button type="submit" onclick="leaveRoom(${room_id})" class="bg-red-600 hover:bg-red-300 text-white p-2 rounded-lg" >Leave</button>
             </div>
@@ -70,7 +84,7 @@ function leaveRoom(room_id) {
         .then(res => res.json())
         .then(data => {
             console.log(data)
-            document.querySelector("#joined" + room_id).remove()
+            document.getElementById("joined" + room_id).remove()
 
         })
         .catch(err => console.log(err))
@@ -95,15 +109,16 @@ function getHistory(room_id) {
     currentRoom = room_id;
     newSpan = document.getElementById("newFor" + room_id);
     newSpan.innerText = "";
-    fetch(`/api/rooms/${room_id}/history`)
-        .then(res => res.json())
-        .then(data => {
-            roomDisplay.innerHTML = data[0].name
-            console.log('history', data)
-            renderChat(data)
-            console.log(renderChat(data));
-        })
-        .catch(err => console.log('get history error', err))
+    jsonFetch(`/api/rooms/${room_id}/history`, (data, err) => {
+        if (err !== null) {
+            console.log('History Error:', err);
+            return
+        }
+        roomDisplay.innerHTML = data[0].name
+        console.log('history', data)
+        renderChat(data)
+        console.log(renderChat(data));
+    }, 'get history error');
 }
 
 //helper function to render chat history, gets called in getHistory
@@ -112,8 +127,7 @@ function renderChat(chat_log) {
     //updating the DOM is expensive, so it's better to generate all the HTML and then set it only once
     let chatHTML = ""
     for (let message of chat_log) {
-        chatHTML +=
-        `
+        chatHTML += `
         <p>${message.username} at ${message.created_at}: ${message.content}</p>
         `
     }
