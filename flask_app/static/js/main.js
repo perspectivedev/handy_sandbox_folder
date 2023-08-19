@@ -13,19 +13,17 @@ const joinedRoomList = document.getElementById('rooms_joined');
 
 
 // function declarations
-async function fetchJSON(request, where=null) {
-    try {
-
-      const response = await fetch(request);
-      const contentType = response.headers.get("content-type");
-      if (!contentType || !contentType.includes("application/json")) {
-        throw new TypeError("Oops, we haven't got JSON!");
-      }
-      return await response.json();
-    } catch (error) {
-      console.error(`Json Error: ${where === null ? '' : where}`, error);
-    }
-  }
+function jsonFetch(request, callback, where=null) {
+    fetch(request)
+        .then(response=> {
+            const contentType = response.headers.get("content-type");
+            if (!contentType || !contentType.includes("application/json")) {
+                callback(null, new TypeError('Content-Type is non-json', contentType));
+            } else
+                callback(response.json(), null); //json, no err
+        })
+        .catch(err => console.error(`jsonFetch Error: ${where === null ? '' : where}`, error));
+}
 
 
 //async function to retrieve the logged in user's info and join them to their list of joined rooms
