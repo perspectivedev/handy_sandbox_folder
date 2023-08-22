@@ -35,10 +35,11 @@ class Room:
         """
         return connectToMySQL(DATABASE).query_db(query, data)
     
+    # WHERE private = 0
     @classmethod
     def get_public(cls):
         query = """
-            SELECT * FROM rooms WHERE private = 0;
+            SELECT * FROM rooms;
         """
         results = connectToMySQL(DATABASE).query_db(query)
         all_rooms = []
@@ -104,10 +105,11 @@ class Room:
     def get_history_by_id(cls,data):
         data = {
             **data,
-            "format": r"%m / %d / %Y, %r" 
+            "format": r"%m/%d/%Y, %r"
         }
+        print(data)
         query = """
-            SELECT name, content, username, DATE_FORMAT(messages.created_at, %(format)s) as created_at FROM rooms 
+            SELECT name, content, username,  rooms.created_at FROM rooms 
             LEFT JOIN messages ON messages.room_id = rooms.id
             LEFT JOIN users ON messages.sender_id = users.id
             WHERE rooms.id = %(id)s;

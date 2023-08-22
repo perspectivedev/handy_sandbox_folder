@@ -14,7 +14,7 @@ def get_room_history(id):
     data = {
         'id' : id
     }
-    return Room.get_history_by_id(data)
+    return {'history': Room.get_history_by_id(data)}
 
 @app.route('/api/rooms/<int:id>/leave')
 def remove_room(id):

@@ -20,9 +20,10 @@ function jsonFetch(request, callback, where=null) {
             if (!contentType || !contentType.includes("application/json")) {
                 callback(null, new TypeError(`Content-Type is non-json: ${contentType}`));
             } else
-                callback(response.json(), null); //json, no err
+                return response.json();
         })
-        .catch(err => console.error(`jsonFetch Error: ${where === null ? '' : where}`, error));
+        .then(data => callback(data, null))
+        .catch(err => console.error(`jsonFetch Error: ${where === null ? '' : where}`, err));
 }
 
 
@@ -58,17 +59,18 @@ function joinNewRoom(room_id) {
     }
     user.joined_room_ids.push(room_id)
     joinRoom(room_id)
-    fetch('/api/rooms/' + room_id + '/join')
-        .then(res => res.json())
-        .then(data => {
-            joinedRoomList.innerHTML += `
-            <div class="flex flex-row justify-center gap-4 cursor-pointer" id="joined${room_id}" >
-                <p class="text-blue-900 underline underline-offset-1" onclick="getHistory(${room_id})" ><span id="newFor${room_id}" class="text-red-600"></span> ${data.roomname} </p>
-                <button type="submit" onclick="leaveRoom(${room_id})" class="bg-red-600 hover:bg-red-300 text-white p-2 rounded-lg" >Leave</button>
-            </div>
-            `
-        })
-        .catch(err => console.log(err))
+    jsonFetch('/api/rooms/' + room_id + '/join' ,  err => {
+        if (err !== null){
+            console.log('Join History', err);
+            return
+        }
+        joinedRoomList.innerHTML += `
+        <div class="flex flex-row justify-center gap-4 cursor-pointer" id="joined${room_id}" >
+            <p class="text-blue-900 underline underline-offset-1" onclick="getHistory(${room_id})" ><span id="newFor${room_id}" class="text-red-600"></span> ${data.roomname} </p>
+            <button type="submit" onclick="leaveRoom(${room_id})" class="bg-red-600 hover:bg-red-300 text-white p-2 rounded-lg" >Leave</button>
+        </div>
+        `
+    }, 'Get Join History');
 }
 
 // function for leaving a room
@@ -112,9 +114,9 @@ function getHistory(room_id) {
             console.log('History Error:', err);
             return
         }
-        roomDisplay.innerHTML = data[0].name
         console.log('history', data);
-        renderChat(data);
+        roomDisplay.innerHTML = data.history[0].name //todo: pass roomname from py in response.
+        renderChat(data.history);
     }, 'get history error');
 }
 
@@ -129,7 +131,7 @@ function renderChat(chat_log) {
         `
     }
     currentChat.innerHTML = chatHTML
-    currentChat.lastChild.scrollIntoView(); //this line scrolls our chat to the bottom
+    currentChat.lastElementChild.scrollIntoView(); //this line scrolls our chat to the bottom
 }
 
 // socket event. connectoin happens when client  connect to server. we collect user data at this time.
@@ -146,7 +148,8 @@ socket.on('message_added', (message, roomFor) => {
         `
         <p>${message.username} at ${message.created_at}: ${message.content}</p>
         `
-        currentChat.lastChild.scrollIntoView();
+        console.log(currentChat.lastElementChild);
+        currentChat.lastElementChild.scrollIntoView();
     } else {
         // if it's for a room we've joined but aren't viewing, we add or increment the badge next to the room
         newSpan = document.getElementById("newFor" + roomFor)
@@ -158,12 +161,13 @@ socket.on('message_added', (message, roomFor) => {
         }
     }
 })
+
 //if a user joins the room we're viewing, this displays that in the chat
 socket.on('user_join', (username, room) => {
     console.log(username + " joined " + room)
     if (room == currentRoom) {
         currentChat.innerHTML += `<p>${username} has joined us live</p>`
-        currentChat.lastChild.scrollIntoView();
+        currentChat.lastElementChild.scrollIntoView();
     }
 })
 
@@ -172,6 +176,6 @@ socket.on('user_leave', (username, room) => {
     console.log(username + " left " + room)
     if (room == currentRoom) {
         currentChat.innerHTML += `<p>${username} has disconnected</p>`
-        currentChat.lastChild.scrollIntoView();
+        currentChat.lastElementChild.scrollIntoView();
     }
 })
