@@ -7,7 +7,7 @@
     <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/styles.css')}}">
     <title>Dashboard</title>
 </head>
-<body class="">
+<body>
         <header class="flex flex-row items-center justify-between  border divide-x-reverse-2 p-2 shadow-sm shadow-slate-700">
             <div class="flex flex-row items-center w-3/12 gap-4">
                 <img src="{{url_for('static', filename='images/logo.png')}}" alt="logo image" class="logo h-[50px] w-[50px]"/>
@@ -29,10 +29,13 @@
                 <span class="text-indigo-700 font-sm font-md"> {{logged_user.username}}</span>
             </div>
 
-            <section class="flex flex-row justify-around m-4 p-4 gap-4">
+            <section class="flex flex-row justify-around m-4 p-4 gap-4 h-3/6">
 
-                    <div class="container border border-slate-100 rounded-lg flex flex-col justify-center bg-white">
-                        <h2 class="text-center">Rooms</h2>
+                    <div class="container border border-slate-100 rounded-lg flex flex-col justify-center bg-white h-96">
+                        <header class="flex flex-row items-center justify-center relative  border divide-x-reverse-2 p-2 shadow-sm shadow-slate-700">
+                            <h2 class="text-center sticky top-0">Rooms</h2>
+                        </header>
+                    <div class="scroll-smooth overflow-scroll overflow-x-hidden box-content scrollbar">
                             {% for room in public_rooms %}
                                 <div class="flex flex-row justify-center items-center text-slate-600 gap-4 my-3.5">
                                     <p>{{room.name}}</p>
@@ -40,11 +43,13 @@
                                 </div>
                             {% endfor %}
                     </div>
+                    </div>
 
-                <div class="container rounded-lg flex flex-col justify-center bg-transparent">
-
-                        <div class="container border border-slate-200 rounded-lg bg-slate-600 text-white">
-                            <h2 class="text-center mt-3.5">Chat Room: <span id="current_room"></span></h2>
+                <div class="container rounded-lg flex flex-col justify-center bg-transparent h-96">
+                            <header class="flex flex-row items-center justify-center sticky top-0 bg-slate-600 text-white  border divide-x-reverse-2 mb-8 p-2 shadow-sm shadow-slate-700">
+                                <h2 class="text-center mt-3.5">Chat Room: <span id="current_room"></span></h2>
+                            </header>
+                        <div class="container border border-slate-200 rounded-lg bg-slate-600 text-white scroll-smooth overflow-scroll overflow-x-hidden box-content scrollbar">
                             <div id="current_chat" class="flex flex-col justify-center p-8">
                                 <p class="border-b-2  border-slate-500 divide-x-reverse-2 mb-3.5 pb-4">Join at least one room and then select it from the right</p>
                             </div>
@@ -61,14 +66,18 @@
 
                 </div>
 
-                <div class="container border border-slate-100 rounded-lg flex flex-col justify-center bg-white"id="rooms_joined">
-                    <h2 class="text-center">Rooms Joined</h2>
-                    {% for room in logged_user.joined_rooms  %}
-                        <div class="flex flex-row justify-center gap-4 cursor-pointer" id="joined{{room.id}}">
-                            <p class="text-blue-900 underline underline-offset-1" onclick="getHistory({{room.id}})" > <span id="newFor{{room.id}}" class="text-red-600"></span> {{room.name}} </p>
-                            <button type="button" onclick="leaveRoom({{room.id}})" class="p-2 border rounded-lg bg-red-600 text-white hover:bg-red-400 hover:text-white">Leave</button>
-                        </div>
-                    {% endfor %}
+                <div class="container border border-slate-100 rounded-lg flex flex-col justify-center bg-white h-96"id="rooms_joined">
+                    <header class="flex flex-row items-center justify-center sticky top-0  border divide-x-reverse-2 p-2 shadow-sm shadow-slate-700">
+                        <h2 class="text-center">Rooms Joined</h2>
+                    </header>
+                    <div class="scroll-smooth overflow-scroll overflow-x-hidden box-content scrollbar">
+                        {% for room in logged_user.joined_rooms  %}
+                            <div class="flex flex-row justify-center gap-4 cursor-pointer" id="joined{{room.id}}">
+                                <p class="text-blue-900 underline underline-offset-1" onclick="getHistory({{room.id}})" > <span id="newFor{{room.id}}" class="text-red-600"></span> {{room.name}} </p>
+                                <button type="button" onclick="leaveRoom({{room.id}})" class="p-2 border rounded-lg bg-red-600 text-white hover:bg-red-400 hover:text-white">Leave</button>
+                            </div>
+                        {% endfor %}
+                    </div>    
                 </div>
 
             </section>

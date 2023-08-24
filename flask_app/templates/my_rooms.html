@@ -27,7 +27,9 @@
         <div class="container bg-slate-600 flex flex-col justify-center w-full">
             <form><button type="submit" class="bg-red-600 hover:bg-red-300 text-white p-2 rounded-lg">Delete</button></form>
             <p>Room Name</p>
-            <p>1 joined</p>
+            {% for public_room in public %}
+                <p>{{public_room.name}} joined</p>
+            {% endfor %}
             <form>
                 <label for="invite_id">Invite:</label>
                 <select name="invite_id" id="invite_id">

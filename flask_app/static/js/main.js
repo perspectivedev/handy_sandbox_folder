@@ -13,6 +13,8 @@ const joinedRoomList = document.getElementById('rooms_joined');
 
 
 // function declarations
+
+//  async helper funciton
 function jsonFetch(request, callback, where=null) {
     fetch(request)
         .then(response=> {
@@ -37,7 +39,7 @@ async function getUser() {
         console.log(user)
         for (let room_id of user.joined_room_ids) {
             console.log('joining ', room_id)
-            joinRoom(room_id)
+            joinRoom(room_id);
         }
 }
 
@@ -54,7 +56,7 @@ function joinRoom(room_id) {
 // function for joining a new room (adds it to our room list)
 function joinNewRoom(room_id) {
     if (user.joined_room_ids.includes(room_id)){
-        alert('Already joined')
+        alert('Already joined');
         return
     }
     user.joined_room_ids.push(room_id)
@@ -87,7 +89,7 @@ function leaveRoom(room_id) {
             document.getElementById("joined" + room_id).remove()
 
         })
-        .catch(err => console.log(err))
+        .catch(err => console.log(err));
 }
 
 function send(event){
@@ -99,21 +101,18 @@ function send(event){
     let message = {'username': user.username, 'content': message_content, 'created_at': new Date().toLocaleString('en-US')};
     socket.emit('new_message', message, currentRoom);
     event.target.message.value = '';
-    console.log(message_content);
-    console.log(message);
-    console.log(socket.emit('new_message', message, currentRoom));
 }
 
 //function for retrieving a room's history from the db and displaying it to page
 function getHistory(room_id) {
-    currentRoom = room_id;
-    newSpan = document.getElementById("newFor" + room_id);
-    newSpan.innerText = "";
     jsonFetch(`/api/rooms/${room_id}/history`, (data, err) => {
         if (err !== null) {
             console.log('History Error:', err);
             return
         }
+        currentRoom = room_id;
+        newSpan = document.getElementById("newFor" + room_id);
+        newSpan.innerText = "";
         console.log('history', data);
         roomDisplay.innerHTML = data.history[0].name //todo: pass roomname from py in response.
         renderChat(data.history);

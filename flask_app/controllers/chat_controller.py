@@ -28,7 +28,7 @@ def on_join(data):
     username = data['username']
     room = data['room']
     join_room(str(room))
-    socketio.emit('user_join', (username, room),to=str(room))
+    socketio.emit('user_join', (username, room), to=str(room))
 
 #Leave room event
 @socketio.on('leave')
@@ -37,7 +37,7 @@ def on_leave(data):
     username = data['username']
     room = data['room']
     leave_room(room)
-    socketio.emit('user_leave', (username,room),to=str(room))
+    socketio.emit('user_leave', (username,room), to=str(room))
 
 #Receive new message
 @socketio.on('new_message')
@@ -48,4 +48,4 @@ def new_message(data, currentRoom):
         'sender_id': session['user_id'],
         'room_id': currentRoom
         })
-    socketio.emit('message_added', (data, currentRoom),to=str(currentRoom))
+    socketio.emit('message_added', (data, currentRoom), to=str(currentRoom))
