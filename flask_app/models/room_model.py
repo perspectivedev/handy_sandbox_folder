@@ -46,6 +46,7 @@ class Room:
         print(all_rooms)
         for row in results:
             all_rooms.append(cls(row))
+            print(all_rooms)
         return all_rooms
     
     @classmethod
@@ -61,21 +62,24 @@ class Room:
     @classmethod
     def public_get_created_by_user_id(cls,data):
         query = """
-            SELECT *, COUNT(users_join_rooms.user_id) as joined FROM rooms 
+            SELECT COUNT(users_join_rooms.user_id), user_id
+            AS joined
+            FROM rooms 
             JOIN users ON users.id = rooms.creator_id
             LEFT JOIN users_join_rooms ON rooms.id = users_join_rooms.room_id 
             WHERE users.id = %(id)s AND rooms.private = 0
-            GROUP BY rooms.id;
+            GROUP BY user_id;
         """
         results = connectToMySQL(DATABASE).query_db(query,data)
         rooms = []
         if results:
             for row in results:
-                room = cls(row)
-                room.joined = row['joined']
-                rooms.append(room)
-        print(rooms)
+                rooms = cls(row)
+                rooms.joined = row['joined']
+                rooms.append(rooms)
+                print(rooms)
         return rooms
+            
     
     @classmethod
     def private_get_created_by_user_id(cls,data):

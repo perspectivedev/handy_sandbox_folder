@@ -81,6 +81,19 @@
 
 </html>
 
+<------------------------------- section for query in room_model.py ------------------------------------>
+SELECT COUNT(users_join_rooms.user_id), users.id
+AS joined
+FROM rooms 
+JOIN users ON users.id = rooms.creator_id
+LEFT JOIN users_join_rooms ON rooms.id = users_join_rooms.room_id 
+WHERE users.id = %(id)s AND rooms.private = 0
+GROUP BY users.id
+ORDER BY COUNT(users_join_rooms.user_id)  DESC;
+
+<-------------------------------- close section for query in room_model.py ----------------------------------->
+
+
 <------------------------------- section for create a room form ------------------------------------>
  <div class="flex flex-col">
                         <form action="/my_rooms">
