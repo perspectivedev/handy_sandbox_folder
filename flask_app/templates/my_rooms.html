@@ -34,65 +34,15 @@
             <header class="flex flex-row items-center justify-center sticky top-0 bg-white text-black border rounded-t-lg divide-x-reverse-2 mb-16 p-2 shadow-sm shadow-slate-700">
                 <h2>Create Room</h2>
             </header>
-            <div class="container">
-                <form action="/rooms/create" method="POST">
+            <div class="container flex flex-col justify-center items-center">
+                <form action="/rooms/create" method="POST" class="flex items-center gap-4">
                     <label for="name">Room Name</label>
                     <input type="text" name="name" id="name" class="border border-slate-300 rounded-lg text-slate-600">
                     <input type="checkbox" name="private" id="private">
                     <label for="private">Private</label>
-                    <button type="submit" class="bg-indigo-600 hover:bg-indigo-300 rounded-lg text-white p-2 text-center">Create</button>
+                    <button type="submit" id="createBtn" class="bg-indigo-600 hover:bg-indigo-300 rounded-lg text-white p-2 text-center">Create</button>
                 </form>
             </div>
-        </div>
-    </div>
-
-    <div class="container rounded-lg flex flex-col justify-center relative bg-slate-600 h-96">
-        <div class="h-full">
-            <header class="flex flex-row items-center justify-center sticky top-0 bg-slate-600 text-white border border-slate-100 rounded-t-lg divide-x-reverse-2 mb-16 p-2 shadow-sm shadow-slate-700">
-            <h2>My Private Rooms</h2>
-            </header>
-            <!-- under construction -->
-            <div class="container bg-slate-600 flex flex-col justify-center w-full">
-                    <div class="flex flex-col items-center justify-center text-white">
-                        <form>
-                        <button type="submit" class="bg-red-600 hover:bg-red-300 text-white p-2 rounded-lg">Delete</button>
-                        </form>
-                    </div>
-                    <div class="flex flex-col items-center justify-center text-white">
-                        <p>Room Name</p>
-                        {% for public_room in public %}
-                            <p>{{public_room.name}} joined</p>
-                        {% endfor %}
-                    </div>
-                    <div class="flex flex-col items-center justify-center">
-                        <form>
-                            <label for="invitee_id" class="text-white">Invite:</label>
-                            <select name="invitee_id" id="invitee_id">
-                                {% for public_room in public %}
-                                    <option value="test">{{public_room.name}}</option>
-                                {% endfor %}
-                            </select>
-                            <button type="submit" class="bg-indigo-600 hover:bg-indigo-300 rounded-lg text-white p-2 text-center">Invite</button>
-                        </form>
-                    </div>
-                </div>
-            </div>
-    </div>
-
-    <div class="container border border-slate-100 rounded-lg flex flex-col justify-center bg-white h-96">
-        <div class="h-full">
-            <header class="flex flex-row items-center justify-center sticky top-0 bg-white text-black border rounded-t-lg divide-x-reverse-2 mb-16 p-2 shadow-sm shadow-slate-700">
-                <h2>My Public Rooms</h2>
-            </header>
-            <div class="container bg-slate-600">
-            {% for public_room in public %}
-                <form action="/rooms/{{public_room.id}}/delete" method="POST"><button type="submit" class="btn">Delete</button></form>
-                <p>{{public_room}}</p>
-                <p>{{public_room.joined}} joined</p>
-            {% endfor %}
-            </div>
-            <p>{{public.name}}</p>
-            <p>{{public.joined}} joined</p>
         </div>
     </div>
 

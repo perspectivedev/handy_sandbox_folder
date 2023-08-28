@@ -75,6 +75,20 @@ function joinNewRoom(room_id) {
     }, 'Get Join History');
 }
 
+// function for adding 'my public rooms' to my_rooms.html
+function my_public_rooms(){
+    jsonFetch(`/my_rooms/ ${room_id}/joined`, err => {
+        if(err !== null){
+            console.log('my public rooms', err)
+            return
+        }
+        let roomName = document.getElementById('name').value;
+        let joined = document.getElementById('joined', + `${room_id}`);
+        joined.innerHTML = `<p>${roomName}</p>`;
+
+    }, 'Get Public Room History')
+}
+
 // function for leaving a room
 function leaveRoom(room_id) {
     socket.emit('leave', {
@@ -82,14 +96,10 @@ function leaveRoom(room_id) {
         room: "" + room_id
     })
     user.joined_room_ids = user.joined_room_ids.filter(e => e != room_id)
-    fetch('/api/rooms/' + room_id + '/leave')
-        .then(res => res.json())
-        .then(data => {
-            console.log(data)
-            document.getElementById("joined" + room_id).remove()
-
-        })
-        .catch(err => console.log(err));
+    jsonFetch(`/api/rooms/${room_id}/leave`, (data, err) => {
+        console.log(data)
+        document.getElementById("joined" + room_id).remove()
+    }, 'Get leave History');
 }
 
 function send(event){

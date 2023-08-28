@@ -47,6 +47,7 @@ def my_rooms():
     public = Room.public_get_created_by_user_id(user_data)
     return render_template('my_rooms.html', logged_user=logged_user, public=public)
 
+
 # This route deal with the post method of the user login. Action on the form should match.
 @app.route('/users/login', methods=['POST'])
 def user_login():

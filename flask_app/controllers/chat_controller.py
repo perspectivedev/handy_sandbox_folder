@@ -30,6 +30,7 @@ def on_join(data):
     join_room(str(room))
     socketio.emit('user_join', (username, room), to=str(room))
 
+
 #Leave room event
 @socketio.on('leave')
 def on_leave(data):
