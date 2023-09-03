@@ -661,6 +661,10 @@ video {
   height: 50%;
 }
 
+.h-5 {
+  height: 1.25rem;
+}
+
 .h-96 {
   height: 24rem;
 }
@@ -673,16 +677,20 @@ video {
   height: 50px;
 }
 
-.h-screen {
-  height: 100vh;
-}
-
 .h-full {
   height: 100%;
 }
 
+.h-screen {
+  height: 100vh;
+}
+
 .w-3\/12 {
   width: 25%;
+}
+
+.w-5 {
+  width: 1.25rem;
 }
 
 .w-\[20px\] {
@@ -818,6 +826,42 @@ video {
 
 .bg-\[url\(\'\.\.\/images\/cah_item1\.jpg\'\)\] {
   background-image: url('../images/cah_item1.jpg');
+}
+
+.bg-\[url\(\'\.\.\/images\/group_of_people\.jpg\'\)\] {
+  background-image: url('../images/group_of_people.jpg');
+}
+
+.bg-\[url\(\'\.\.\/images\/group_of_people\.mov\'\)\] {
+  background-image: url('../images/group_of_people.mov');
+}
+
+.bg-\[url\(\'\.\.\/images\/group_of_people\.MOV\'\)\] {
+  background-image: url('../images/group_of_people.MOV');
+}
+
+.bg-\[url\(\'\.\.\/images\/fall_photo\.jpg\'\)\] {
+  background-image: url('../images/fall_photo.jpg');
+}
+
+.bg-\[url\(\'\.\.\/images\/socializing_photo\.jpg\'\)\] {
+  background-image: url('../images/socializing_photo.jpg');
+}
+
+.bg-\[url\(\'\.\.\/images\/bg-item_3\.jpg\'\)\] {
+  background-image: url('../images/bg-item_3.jpg');
+}
+
+.bg-\[url\(\'\.\.\/images\/bg-item-33\.jpg\'\)\] {
+  background-image: url('../images/bg-item-33.jpg');
+}
+
+.bg-\[url\(\'\.\.\/images\/socializing_photo\.heic\'\)\] {
+  background-image: url('../images/socializing_photo.heic');
+}
+
+.bg-\[url\(\'\.\.\/images\/socializing_photo\.HEIC\'\)\] {
+  background-image: url('../images/socializing_photo.HEIC');
 }
 
 .bg-center {
